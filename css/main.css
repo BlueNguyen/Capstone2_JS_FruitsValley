@@ -65,6 +65,9 @@ header .nav-item:hover::before, header .nav-item.active::before {
 header .nav-item:hover .nav-link, header .nav-item.active .nav-link {
   color: #e62b4a;
 }
+header #cart {
+  cursor: pointer;
+}
 
 .carouselFruits {
   padding-top: 90px;
