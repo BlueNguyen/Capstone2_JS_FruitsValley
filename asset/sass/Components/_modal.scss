@@ -1,0 +1,15 @@
+.modal{
+    .head-form{
+        background: $color-green;
+        color: $color-dark-2;
+        h2{
+            text-align: center;
+        }
+    }
+    .modal-body{
+        .input-group{
+            display: flex;
+            margin-top: 25px;
+        }
+    }
+}

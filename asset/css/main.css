@@ -12,6 +12,18 @@ html, body {
   background-color: #f5f9fe;
 }
 
+.modal .head-form {
+  background: #7ed957;
+  color: #121212;
+}
+.modal .head-form h2 {
+  text-align: center;
+}
+.modal .modal-body .input-group {
+  display: flex;
+  margin-top: 25px;
+}
+
 header {
   background-color: #7ed957;
   position: fixed;
