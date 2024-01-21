@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Fruits Admin</title>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- BS 4.6.2 CSS-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      #body{
+        background-image: linear-gradient(
+      to right,
+      #7ed957,
+      #0097b2 51%,
+      #7ed957 100%
+    );
+    
+      }
+
+      #loading{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: white;
+        z-index: 1;
+      }
+    </style>
+
+  </head>
+
+  <body id="body">
+    <div id="loading">
+      <img style="transform: translate(600px,200px);" src="../asset/img/Rolling-1s-200px.svg" alt="lỗi ảnh">
+    </div>
+    <div class="container" style="background-color: white;">
+      <nav class="navbar navbar-expand-sm " style="background: #7ed957">
+        <a class="navbar-brand" href="#"><img style="width: 80px;" src="../asset/img/logo.png" alt=""> 
+          <div class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle font-weight-bold"
+                href="#"
+                id="dropdownId"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >Trái cây theo vùng miền</a
+              >
+              <div class="dropdown-menu" aria-labelledby="dropdownId">
+                <a class="dropdown-item" href="#" onclick="renderArea('Nhập khẩu')">Nhập khẩu</a>
+                <a class="dropdown-item" href="#" onclick="renderArea('Miền Bắc')">Miền Bắc</a>
+                <a class="dropdown-item" href="#" onclick="renderArea('Miền Trung')">Miền Trung</a>
+                <a class="dropdown-item" href="#" onclick="renderArea('Miền Nam')">Miền Nam</a>
+              </div>
+            </div>
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        ></button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" href="../index.html"
+                >Trang chủ <i class="fa fa-arrow-left"></i></a><span class="sr-only">(current)</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="display-4 my-4 font-weight-bold container">
+        DANH SÁCH CÁC LOẠI TRÁI CÂY
+      </div>
+      <!-- Phan tab menu -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            href="#DanhSachSP"
+            role="tab"
+            data-toggle="tab"
+            onclick="renderAreaAll()"
+            >Tất cả</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link "
+            href="#DanhSachSP"
+            role="tab"
+            data-toggle="tab"
+            onclick="renderArea('Miền Bắc')"
+            >Trái cây Miền Bắc</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link "
+            href="#DanhSachSP"
+            role="tab"
+            data-toggle="tab"
+            onclick="renderArea('Miền Trung')"
+            >Trái cây Miền Trung</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link "
+            href="#DanhSachSP"
+            role="tab"
+            data-toggle="tab"
+            onclick="renderArea('Miền Nam')"
+            >Trái cây Miền Nam</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link "
+            href="#DanhSachSP"
+            role="tab"
+            data-toggle="tab"
+            onclick="renderArea('Nhập khẩu')"
+            >Trái cây Nhập Khẩu</a
+          >
+        </li>
+        
+      </ul>
+      <br />
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!--Danh sách sản phẩm -->
+        <div role="tabpanel" class="tab-pane  in active" id="DanhSachSP">
+          <div class="row">
+            <div class="col-md-8">
+              <!-- BEGIN BUTTOM THÊM MỚI -->
+              <button
+                id="btnThemSP"
+                class="btn btn-success"
+                data-toggle="modal"
+                data-target="#myModal"
+              >
+                <i class="fa fa-plus mr-1"></i>
+                Thêm Mới
+              </button>
+              <!-- END BUTTON THÊM MỚI -->
+            </div>
+            <div class="col-md-4">
+              <!-- BEGIN TÌM KIẾM -->
+              <div class="input-group mb-3">
+                <input
+                id="inputSearch"
+                  type="text"
+                  class="form-control"
+                  placeholder="Nhập tên trái cây"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2" onclick="searchProducts()"
+                    ><i class="fa fa-search"></i
+                  ></span>
+                </div>
+              </div>
+              <!-- END TÌM KIẾM -->
+            </div>
+          </div>
+          <div class="clear-fix"></div>
+          <div class="tblSanPham" id="tblSanPham">
+            <!-- BEGIN TABLE SẢN PHẨM -->
+            <table class="table table-bordered">
+              <thead>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Hình ảnh</th>
+                <th>Giá</th>
+                <th>Vùng</th>
+                <th>Mô Tả</th>                
+                <th>Action</th>
+              </thead>
+              <tbody id="tblDanhSachSP"></tbody>
+            </table>
+            <!-- END TABLE SẢN PHẨM -->
+          </div>
+          <br />
+        </div>
+        <!-- Kết thúc danh sách sản phẩm -->       
+      </div>
+
+      <!--KetThuc Tabmenu-->
+
+      <!-- The Modal -->
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Nhập thông tin trái cây</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Tên</label>
+                <input
+                  id="TenSP"
+                  class="form-control"
+                  placeholder="Nhập vào tên trái cây"
+                />
+              </div>
+              <div class="form-group">
+                <label>Hình ảnh</label>
+                <input
+                  id="HinhSP"
+                  class="form-control"
+                  placeholder="Nhập vào hình ảnh"
+                />
+              </div>             
+              <div class="form-group">
+                <label>Giá</label>
+                <input
+                  id="GiaSP"
+                  class="form-control"
+                  placeholder="Nhập vào giá trái cây"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Vùng</label>
+                <input
+                  id="loaiSP"
+                  class="form-control"
+                  placeholder="Nhập vào loại trái cây"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Mô tả</label>
+                <input
+                  id="MoTaSP"
+                  class="form-control"
+                  placeholder="Nhập vào mô tả sản phẩm"
+                  style="padding: 50px;"
+                />
+              </div>
+
+
+              <!-- <div class="form-group">
+                <label for="">Loại sản phẩm: </label>
+                <select class="form-control" id="loaiSP">
+                  <option value="phone">Phone</option>
+                  <option value="laptop">Laptop</option>
+                  <option value="other">Other</option>
+                </select>
+              </div> -->
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button class="btn btn-success" onclick="createProduct()">Add product</button>
+              <button class="btn btn-primary" onclick="updateProduct()">Update product</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Modal Trash Delete -->
+    <div id="confirmPopup" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form >
+            <div class="modal-body">
+              <p>Bạn có chắc muốn xoá trái cây này?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                class="btn btn-default"
+                data-dismiss="modal"
+                value="No"
+                id="confirmNo"
+              >
+               Không
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-primary deleYes"
+                value="Yes"
+                id="confirmYes"
+              >
+               Đồng ý
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- JQUERY -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <!-- BS 4.6.2 JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"
+    ></script>
+    
+<!-- axios js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js" integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <!-- my js -->
+    <script src="./admin.js"></script>
+
+    <style src="../asset/img/buoi-da-xanh-ruot-hong-do_5-300x300.jpg"></style>
+
+  </body>
+</html>
