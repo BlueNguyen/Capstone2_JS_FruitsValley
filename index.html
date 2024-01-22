@@ -48,10 +48,10 @@
               <a class="nav-link" href="#"><i class="fa-solid fa-screwdriver-wrench"></i></i> Admin Portal</a>
             </li>
           </ul>
-          <a class="nav-link ml-auto" id="cart" data-toggle="modal" data-target="#myModal">
-            <i class="fa fa-shopping-cart"></i> 
-             Cart
-              
+          <a class="nav-link ml-auto" id="cart" onclick="showModal()">
+            <i class="fa fa-shopping-cart"></i>
+            Cart
+
           </a>
         </div>
       </nav>
@@ -85,164 +85,32 @@
     </div>
   </section>
 
+
   <section class="products">
     <div class="container">
-      <h2 class="title">-Featured Products-</h2>
-      <div class="list" id="list">
-
-        <!-- <div class="item">
-          <div class="img">
-            <img class="img-fluid" src="./img/Grape.jpg" alt="" />
-          </div>
-          <div class="desc">
-            <div class="content">
-              <h3>Grape</h3>
-              <p>Accessories</p>
-              <div>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-              </div>
-            </div>
-            <div class="price">
-              <p>$99.99</p>
-              <button class="buy">
-                <i class="fa fa-shopping-cart"></i> Buy Now
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="img">
-            <img src="./img/Grapefruit.jpg" alt="" />
-          </div>
-          <div class="desc">
-            <div class="content">
-              <h3>Grapefruit</h3>
-              <p>Accessories</p>
-              <div>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-              </div>
-            </div>
-            <div class="price">
-              <p>$99.99</p>
-              <button class="buy">
-                <i class="fa fa-shopping-cart"></i> Buy Now
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="img">
-            <img src="./img/longan3.jpg" alt="" />
-          </div>
-          <div class="desc">
-            <div class="content">
-              <h3>Longan</h3>
-              <p>Accessories</p>
-              <div>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-              </div>
-            </div>
-            <div class="price">
-              <p>$99.99</p>
-              <button class="buy">
-                <i class="fa fa-shopping-cart"></i> Buy Now
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="img">
-            <img src="./img/coconut2.jpg" alt="" />
-          </div>
-          <div class="desc">
-            <div class="content">
-              <h3>Coconut</h3>
-              <p>Accessories</p>
-              <div>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-              </div>
-            </div>
-            <div class="price">
-              <p>$99.99</p>
-              <button class="buy">
-                <i class="fa fa-shopping-cart"></i> Buy Now
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="img">
-            <img src="./img/mandarin.jpg" alt="" />
-          </div>
-          <div class="desc">
-            <div class="content">
-              <h3>Mandarin</h3>
-              <p>Accessories</p>
-              <div>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-              </div>
-            </div>
-            <div class="price">
-              <p>$99.99</p>
-              <button class="buy">
-                <i class="fa fa-shopping-cart"></i> Buy Now
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="img">
-            <img src="./img/Durian.jpg" alt="" />
-          </div>
-          <div class="desc">
-            <div class="content">
-              <h3>Durian</h3>
-              <p>Accessories</p>
-              <div>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-              </div>
-            </div>
-            <div class="price">
-              <p>$99.99</p>
-              <button class="buy">
-                <i class="fa fa-shopping-cart"></i> Buy Now
-              </button>
-            </div>
-          </div>
-        </div> -->
-
+      <h2 class="title">-TRÁI CÂY TRONG VÀ NGOÀI NƯỚC-</h2>
+      <!-- dropdown  -->
+      <div class="form-group">
+        <label for=""></label>
+        <select class="dropdown form-control" onchange="fetchListFilter()" id="loai-trai-cay">
+          <option>Tất Cả Sản Phẩm---Chọn Loại</option>
+          
+          <option >Nhập khẩu</option>
+          <option >Miền Bắc</option>
+          <option >Miền Trung</option>
+          <option >Miền Nam</option>
+        </select>
       </div>
+      <br>
+
+      <div class="list" id="list">
+      </div>
+
+
+
     </div>
   </section>
+
 
   <footer>
     <img class="img-fluid" src="./img/angle-up-light.svg" alt="" />
@@ -269,132 +137,41 @@
     <i class="fa fa-angle-up"></i>
   </a>
 
+  <!-- modal  -->
+  <section class="my_Modal">
+    <div class="background__modal">
 
-  <!-- The Modal -->
-	<div class="modal fade" id="myModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
+    </div>
+    <div class="cart">
+      <h1>Danh Sách Sản Phẩm</h1>
+      <div class="body">
+        <table class="table table-bordered table-hover myTable">
+          <thead class="text-primary">
+            <tr>
 
-				<header class="header">
-					<h2 id="header-title">Log In</h2>
-				</header>
+              <th>STT</th>
+              <th>Tên</th>
+              <th>Đơn Giá</th>
+              <th>Số Lượng</th>
+              <th>Loại</th>
+              <th>Thành Tiền</th>
 
-				
+              <th><em class="fa fa-cog"></em></th>
+            </tr>
+          </thead>
+          <tbody id="tableDanhSach">
 
-				<!-- Modal body -->
-				<div class="modal-body">
+          </tbody>
+        </table>
+      </div>
+      <button class="btn btn-danger" onclick="hideModal()">Thoat</button>
+    </div>
 
-					<form role="form">
+    
 
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-user"></i></span>
-								</div>
-								<input type="text" name="tk" id="tknv" class="form-control input-sm"
-									placeholder="Tài khoản">
-							</div>
+  </section>
+  
 
-							<span class="sp-thongbao" id="tbTKNV"></span>
-						</div>
-
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-address-book"></i></span>
-								</div>
-								<input type="name" name="name" id="name" class="form-control input-sm"
-									placeholder="Họ và tên">
-							</div>
-							<span class="sp-thongbao" id="tbTen"></span>
-						</div>
-
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-envelope"></i></span>
-								</div>
-								<input type="email" name="email" id="email" class="form-control input-sm"
-									placeholder="Email">
-							</div>
-
-							<span class="sp-thongbao" id="tbEmail"></span>
-						</div>
-
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-key"></i></span>
-								</div>
-								<input type="password" name="password" id="password" class="form-control input-sm"
-									placeholder="Mật khẩu">
-							</div>
-							<span class="sp-thongbao" id="tbMatKhau"></span>
-						</div>
-
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-calendar"></i></span>
-								</div>
-								<input type="text" name="ngaylam" id="datepicker" class="form-control"
-									placeholder="Ngày làm">
-							</div>
-
-							<span class="sp-thongbao" id="tbNgay"></span>
-						</div>
-
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-money" aria-hidden="true"></i></span>
-								</div>
-								<input type="text" name="luongCB" id="luongCB" class="form-control input-sm"
-									placeholder="Lương cơ bản">
-							</div>
-							<span class="sp-thongbao" id="tbLuongCB"></span>
-						</div>
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-briefcase"></i></span>
-								</div>
-								<select class="form-control" id="chucvu">
-									<option>Chọn chức vụ</option>
-									<option>Sếp</option>
-									<option>Trưởng phòng</option>
-									<option>Nhân viên</option>
-								</select>
-							</div>
-
-							<span class="sp-thongbao" id="tbChucVu"></span>
-						</div>
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-clock-o"
-											aria-hidden="true"></i></span>
-								</div>
-								<input type="text" name="gioLam" id="gioLam" class="form-control input-sm"
-									placeholder="Giờ làm">
-							</div>
-							<span class="sp-thongbao" id="tbGiolam"></span>
-						</div>
-
-					</form>
-				</div>
-
-				<!-- Modal footer -->
-				<div class="modal-footer" id="modal-footer">
-					<button id="btnThemNV" type="button" class="btn btn-success" onclick="themNd()">Thêm người
-						dùng</button>
-					<button id="btnCapNhat" type="button" class="btn btn-success" onclick="capNhat()">Cập nhật</button>
-					<button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-				</div>
-
-			</div>
-		</div>
-	</div>
   <!-- JQUERY -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -406,10 +183,15 @@
   <script src="./js/utilBackToTop.js"></script>
   <script src="./js/mainBackToTop.js"></script>
   <!-- aixos  -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js" integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+    integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- my model  -->
+  <script src="./js/model.js"></script>
   <!-- my js  -->
   <script src="./js/myMain.js"></script>
+
+
 
 
 </body>
