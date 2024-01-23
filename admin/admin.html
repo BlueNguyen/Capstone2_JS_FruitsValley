@@ -199,7 +199,7 @@
                 <th>Hình ảnh</th>
                 <th>Giá</th>
                 <th>Vùng</th>
-                <th>Mô Tả</th>                
+                <th class="text-center">Mô Tả</th>                
                 <th>Action</th>
               </thead>
               <tbody id="tblDanhSachSP"></tbody>
@@ -239,7 +239,7 @@
                 <input
                   id="HinhSP"
                   class="form-control"
-                  placeholder="Nhập vào hình ảnh"
+                  placeholder="Nhập link hình ảnh"
                 />
               </div>             
               <div class="form-group">
@@ -252,12 +252,20 @@
               </div>
 
               <div class="form-group">
-                <label>Vùng</label>
+                <!-- <label>Vùng</label>
                 <input
                   id="loaiSP"
                   class="form-control"
                   placeholder="Nhập vào loại trái cây"
-                />
+                /> -->
+                <select id="loaiSP">
+                  <option value="">Vùng</option>
+                  <option value="Miền Bắc">Miền Bắc</option>
+                  <option value="Miền Trung">Miền Trung</option>
+                  <option value="Miền Nam">Miền Nam</option>
+                  <option value="Nhập khẩu">Nhập khẩu</option>
+                </select>
+
               </div>
 
               <div class="form-group">

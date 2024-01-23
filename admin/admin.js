@@ -59,7 +59,7 @@ function createProduct() {
   let type = document.getElementById("loaiSP").value;
   let desc = document.getElementById("MoTaSP").value;
 
-  console.log("type", type)
+  // console.log("type", type);
 
   let product = {
     name: ten,
@@ -76,8 +76,8 @@ function createProduct() {
     data: product,
   })
     .then(function (res) {
-      console.log("res", res);
-      console.log("res.data", res.data);
+      // console.log("res", res);
+      // console.log("res.data", res.data);
       fetchListProduct();
       $("#myModal").modal("hide");
     })
@@ -87,14 +87,15 @@ function createProduct() {
 }
 
 function deleteProduct(id) {
+  if (confirm("Bạn có chắc muốn xoá trái cây này không?")) {
     turnOnLoading();
-  
+
     axios({
       url: `https://65a5f6bc74cf4207b4ef0f02.mockapi.io/product/${id}`,
       method: "DELETE",
     })
       .then(function (res) {
-        console.log("res", res.data);
+        // console.log("res", res.data);
         // gọi lại api lấy danh sách product sau khi xoá
         fetchListProduct();
         renderListProduct(res.data);
@@ -103,8 +104,8 @@ function deleteProduct(id) {
         turnOffloading();
         console.log("err", err);
       });
-
-    }
+  }
+}
 
 function editProduct(id) {
   // console.log("id",id)
@@ -134,7 +135,7 @@ function updateProduct() {
   let ten = document.getElementById("TenSP").value;
   let img = document.getElementById("HinhSP").value;
   let price = document.getElementById("GiaSP").value;
-  let type =document.getElementById("loaiSP").value ;
+  let type = document.getElementById("loaiSP").value;
   let desc = document.getElementById("MoTaSP").value;
 
   let product = {
@@ -173,11 +174,9 @@ function updateProduct() {
 
 //       searchResults.innerHTML = ""; // Xóa tất cả các mục trước khi thêm kết quả mới
 
-
-//       data.forEach((productArr) => {   
+//       data.forEach((productArr) => {
 //         let contentHTML = "";
 
-        
 //         productArr.forEach((item, index) => {
 //           const tr = document.createElement("tr");
 //           tr.innerHTML = `
@@ -214,26 +213,25 @@ function updateProduct() {
 // }
 
 // function findProduct(){
-  
+
 // }
 
-function renderArea(rate){
-  
+function renderArea(rate) {
   axios({
     url: `https://65a5f6bc74cf4207b4ef0f02.mockapi.io/product/`,
     method: "GET",
   })
     .then(function (res) {
       turnOffloading();
-      console.log("res", res.data);
-      let productArr= res.data;
-      let areaArr=[];
-      productArr.forEach(function(item){
-        if(item.type==rate){
+      // console.log("res", res.data);
+      let productArr = res.data;
+      let areaArr = [];
+      productArr.forEach(function (item) {
+        if (item.type == rate) {
           areaArr.push(item);
         }
       });
-      console.log("areaArr",areaArr)
+      // console.log("areaArr", areaArr);
       // gọi lại api lấy danh sách product
       renderListProduct(areaArr);
     })
@@ -250,7 +248,7 @@ function renderAreaAll() {
   })
     .then(function (res) {
       turnOffloading();
-      console.log("res.data", res.data);
+      // console.log("res.data", res.data);
       // gọi lại api lấy danh sách product
       renderListProduct(res.data);
     })
@@ -259,13 +257,3 @@ function renderAreaAll() {
       console.log("err", err);
     });
 }
-
-
-
-
-
-
-
-
-
-
