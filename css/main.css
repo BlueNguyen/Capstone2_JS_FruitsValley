@@ -12,6 +12,27 @@ html, body {
   background-color: #f5f9fe;
 }
 
+.loading {
+  display: none;
+  animation: showHide 0.2s;
+}
+.loading .backgroud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 130;
+  background-color: rgba(0, 0, 0, 0.479);
+  width: 100%;
+  height: 100vh;
+}
+.loading .img {
+  position: fixed;
+  z-index: 140;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 header {
   background-color: #7ed957;
   position: fixed;
@@ -232,6 +253,7 @@ footer .footer__content a:hover {
 .my_Modal {
   color: #121212;
   text-align: center;
+  display: none;
 }
 .my_Modal h1 {
   background-color: #2196f3;
@@ -244,7 +266,6 @@ footer .footer__content a:hover {
   top: 0;
   left: 0;
   z-index: 110;
-  display: none;
 }
 .my_Modal .cart {
   background-color: #fff;
@@ -256,7 +277,6 @@ footer .footer__content a:hover {
   left: 50%;
   transform: translate(-50%);
   z-index: 120;
-  display: none;
   animation: upDown 0.5s;
 }
 .my_Modal .cart .body {
@@ -270,6 +290,17 @@ footer .footer__content a:hover {
   }
   100% {
     left: 50%;
+    opacity: 1;
+  }
+}
+@keyframes showHide {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
     opacity: 1;
   }
 }/*# sourceMappingURL=main.css.map */

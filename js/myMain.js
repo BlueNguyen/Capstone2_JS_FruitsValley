@@ -1,3 +1,32 @@
+
+// hiệu ứng pending
+function onLoading() {
+  document.querySelector(".loading").style.display = "block";
+
+}
+function offLoading() {
+  document.querySelector(".loading").style.display = "none";
+
+}
+function onMessage() {
+  document.querySelector(".message_loading").style.display = "block";
+
+}
+function offMessage() {
+  document.querySelector(".message_loading").style.display = "none";
+
+}
+// ẩn hiện
+function showModal() {
+  document.querySelector(".my_Modal").style.display = "block";
+
+}
+function hideModal() {
+  document.querySelector(".my_Modal").style.display = "none";
+
+}
+
+
 // render vào home 
 function renderListProduct(productArr) {
   let content = "";
@@ -60,16 +89,6 @@ function fetchListProduct() {
 }
 fetchListProduct();
 
-
-// ẩn hiện
-function showModal() {
-  document.querySelector(".background__modal").style.display = "block";
-  document.querySelector(".cart").style.display = "block";
-}
-function hideModal() {
-  document.querySelector(".background__modal").style.display = "none";
-  document.querySelector(".cart").style.display = "none";
-}
 
 
 // filter 
@@ -290,10 +309,9 @@ function fetchListFilter() {
 }
 
 
-
 // thêm mới hoặc cộng dồn
 function addCart(id) {
-
+  onLoading()
   // api giỏ hàng
   axios({
     url: "https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit",
@@ -317,37 +335,43 @@ function addCart(id) {
           // update productCart
           productCart.price = numberPrice;
           productCart.quantity = 1;
+          productCart.money = productCart.price * productCart.quantity;
+          productCart.idFruit = productCart.id;
+
+
           // push hoặc cộng dồn
           let found = false;
 
           for (let i = 0; i < dsCart.length; i++) {
-            if (id == dsCart[i].id) {
+            if (id == dsCart[i].idFruit) {
               dsCart[i].quantity += 1;
-
+              dsCart[i].money = dsCart[i].quantity * dsCart[i].price;
               let productFruit = dsCart[i];
-              // cộng dồn
+              let idProductFruit = productFruit.id;
+              // cộng dồn số lượng, update thành tiền
               axios({
-                url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${id}`,
+                url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${idProductFruit}`,
                 method: "PUT",
                 data: productFruit,
               })
                 .then(function (res) {
+                  offLoading();
                   renderListCart();
                 })
                 .catch(function (err) {
+                  offLoading();
                   console.log(err);
                 });
 
             };
 
-            if (id == dsCart[i].id) {
+            if (id == dsCart[i].idFruit) {
               found = true;
               break
             }
           };
           if (!found) {
             dsCart.push(productCart);
-
             // push vào
             axios({
               url: "https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit",
@@ -355,9 +379,11 @@ function addCart(id) {
               data: productCart,
             })
               .then(function (res) {
+                offLoading();
                 renderListCart();
               })
               .catch(function (err) {
+                offLoading();
                 console.log(err);
               });
 
@@ -373,7 +399,6 @@ function addCart(id) {
     });
 
 };
-
 
 
 // render len gio hang
@@ -393,40 +418,28 @@ function renderListCart() {
       }
       todalMoney = new Intl.NumberFormat('vn-VN').format(todalMoney);
 
-
       //dom
 
-      let arrListCart = [];
       let stt = 0;
-      for (i = 0; i < arrListFruit.length; i++) {
-        stt += 1;
-        let newProductCart = new fruit(
-          arrListFruit[i].id,
-          stt,
-          arrListFruit[i].name,
-          arrListFruit[i].type,
-          arrListFruit[i].price,
-          arrListFruit[i].quantity
-        )
-        arrListCart.push(newProductCart);
-      };
-
       let content = "";
-      for (let i = 0; i < arrListCart.length; i++) {
+      for (let i = 0; i < arrListFruit.length; i++) {
 
+        stt += 1;
+        let price = new Intl.NumberFormat('vn-VN').format(arrListFruit[i].price);
+        let money = new Intl.NumberFormat('vn-VN').format(arrListFruit[i].money);
         let string = `
             <tr>
-                <td>${arrListCart[i].stt}</td>
-                <td>${arrListCart[i].name}</td>
-                <td>${arrListCart[i].price}</td>
-                <td>${arrListCart[i].quantity}</td>
-                <td>${arrListCart[i].type}</td>
-                <td>${arrListCart[i].money()}</td>
+                <td>${stt}</td>
+                <td>${arrListFruit[i].name}</td>
+                <td>${price} đ</td>
+                <td>${arrListFruit[i].quantity}</td>
+                <td>${arrListFruit[i].type}</td>
+                <td>${money} đ</td>
                 <td>
                     
-                    <button onclick="tang(${arrListCart[i].id})" class="btn btn-primary">Tăng số lượng</button>
-                    <button onclick="giam(${arrListCart[i].id})" class="btn btn-primary">Giảm số lượng</button>
-                    <button onclick="xoa(${arrListCart[i].id})" class="btn btn-danger">Xóa</button>
+                    <button onclick="tang(${arrListFruit[i].id})" class="btn btn-primary">Tăng số lượng</button>
+                    <button onclick="giam(${arrListFruit[i].id})" class="btn btn-primary">Giảm số lượng</button>
+                    <button onclick="xoa(${arrListFruit[i].id})" class="btn btn-danger">Xóa</button>
                 </td>
             </tr>
             
@@ -436,6 +449,10 @@ function renderListCart() {
       let stringTotalMoney = `<tr>
                                 <td colspan="5">TỔNG TIỀN</td>
                                 <td>${todalMoney} đ</td>
+                                <td>
+                                <button onclick="thanhToan()" class="btn btn-primary">Thanh Toán</button>
+                                <button class="btn btn-danger" onclick="hideModal()">Thoát</button>
+                                </td>
                             </tr>`;
       content += stringTotalMoney;
 
@@ -447,18 +464,19 @@ function renderListCart() {
 }
 renderListCart()
 
-
 // delete
 function xoa(id) {
+  onLoading();
   axios({
     url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${id}`,
     method: "DELETE",
   })
     .then(function (res) {
-      console.log("xoa")
+      offLoading();
       renderListCart();
     })
     .catch(function (err) {
+      offLoading();
       console.log(err);
     });
 
@@ -466,60 +484,62 @@ function xoa(id) {
 
 //Tăng
 function tang(id) {
+  onLoading();
   axios({
     url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${id}`,
     method: "GET",
   })
     .then(function (res) {
-      let productCart=res.data;
-      productCart.quantity+=1
+      let productCart = res.data;
+
+      productCart.quantity += 1
+      productCart.money = productCart.quantity * productCart.price;
       axios({
         url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${id}`,
         method: "PUT",
         data: productCart,
       })
         .then(function (res) {
-          
-          
+          offLoading();
           renderListCart();
         })
         .catch(function (err) {
+          offLoading();
           console.log(err);
         });
-      
+
     })
     .catch(function (err) {
       console.log(err);
     });
 
-
-
-  
-
 }
 //Giảm
 function giam(id) {
+  onLoading();
   axios({
     url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${id}`,
     method: "GET",
   })
     .then(function (res) {
-      let productCart=res.data;
-      productCart.quantity-=1
-      if(productCart.quantity<=0){
-        
+      offLoading();
+      let productCart = res.data;
+      //sửa update thêm thành tiền
+      productCart.quantity -= 1
+      productCart.money = productCart.quantity * productCart.price;
+      if (productCart.quantity <= 0) {
+
         xoa(id);
         renderListCart()
         alert(`Bạn đã giảm hết số lượng của "${productCart.name}"`)
-      }else{
+      } else {
         axios({
           url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${id}`,
           method: "PUT",
           data: productCart,
         })
           .then(function (res) {
-            
-            
+
             renderListCart();
           })
           .catch(function (err) {
@@ -527,6 +547,48 @@ function giam(id) {
           });
       }
 
+
+    })
+    .catch(function (err) {
+      offLoading();
+      console.log(err);
+    });
+
+
+
+
+}
+
+//thanh toán
+function thanhToan() {
+  onLoading();
+  axios({
+    url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit`,
+    method: "GET",
+    
+  })
+    .then(function (res) {
+      let arrListCart=res.data;
+      for (let i = 0; i < arrListCart.length; i++) {
+        let id = arrListCart[i].id;
+        
+        axios({
+          url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${id}`,
+          method: "DELETE",
+        })
+          .then(function (res) {
+            offLoading();
+            renderListCart();
+            
+          })
+          .catch(function (err) {
+            offLoading();
+            console.log(err);
+          });
+        
+        
+      }
+    
       
       
     })
@@ -534,11 +596,22 @@ function giam(id) {
       console.log(err);
     });
 
-
-
-  
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
