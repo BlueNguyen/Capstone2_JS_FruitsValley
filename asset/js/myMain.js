@@ -437,20 +437,20 @@ function renderListCart() {
                 <td>${money} đ</td>
                 <td>
                     
-                    <button onclick="tang(${arrListFruit[i].id})" class="btn btn-primary">Tăng số lượng</button>
-                    <button onclick="giam(${arrListFruit[i].id})" class="btn btn-primary">Giảm số lượng</button>
-                    <button onclick="xoa(${arrListFruit[i].id})" class="btn btn-danger">Xóa</button>
+                    <button onclick="tang(${arrListFruit[i].id})" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+                    <button onclick="giam(${arrListFruit[i].id})" class="btn btn-warning"><i class="fa fa-minus"></i></button>
+                    <button onclick="xoa(${arrListFruit[i].id})" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                 </td>
             </tr>
             
-        `
+        `;
         content += string;
       }
       let stringTotalMoney = `<tr>
                                 <td colspan="5">TỔNG TIỀN</td>
                                 <td>${todalMoney} đ</td>
                                 <td>
-                                <button onclick="thanhToan()" class="btn btn-primary">Thanh Toán</button>
+                                <button onclick="thanhToan()" class="btn btn-success">Thanh Toán</button>
                                 <button class="btn btn-danger" onclick="hideModal()">Thoát</button>
                                 </td>
                             </tr>`;
