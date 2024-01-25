@@ -11,6 +11,7 @@
 
 //components
 @import "./Components/button";
+@import "./Components/loading";
 @import "./Components/modal";
 
 
@@ -18,10 +19,13 @@
 @import "./Layouts/header";
 @import "./Layouts/carousel";
 @import "./Layouts/product";
-@import "./Layouts/footer"
-
+@import "./Layouts/footer";
+@import "./Layouts/modalCart";
 
 
 //Pages
 
 //Theme
+
+//Animation
+@import "./Animation/keyframes";
