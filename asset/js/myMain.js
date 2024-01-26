@@ -395,10 +395,12 @@ function addCart(id) {
 
         })
         .catch(function (err) {
+          offLoading();
           console.log(err);
         });
     })
     .catch(function (err) {
+      offLoading();
       console.log(err);
     });
 
@@ -463,6 +465,7 @@ function renderListCart() {
       document.getElementById("tableDanhSach").innerHTML = content;
     })
     .catch(function (err) {
+      offLoading();
       console.log(err);
     });
 }
@@ -515,7 +518,9 @@ function tang(id) {
 
     })
     .catch(function (err) {
+      offLoading();
       console.log(err);
+      
     });
 
 }
@@ -550,6 +555,7 @@ function giam(id) {
             offLoading();
           })
           .catch(function (err) {
+            offLoading();
             console.log(err);
           });
       }
@@ -609,6 +615,7 @@ function thanhToan() {
 
     })
     .catch(function (err) {
+      offLoading();
       console.log(err);
     });
 
