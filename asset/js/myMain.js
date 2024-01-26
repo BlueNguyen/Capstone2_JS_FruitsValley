@@ -88,11 +88,11 @@ fetchListProduct();
 
 // filter 
 function filter(productArr) {
-  
+
   let type = document.getElementById("loai-trai-cay").value;
   if (type == "Tất Cả Sản Phẩm---Chọn Loại") {
     fetchListProduct();
-    
+
   };
 
   if (type == "Miền Bắc") {
@@ -140,9 +140,9 @@ function filter(productArr) {
       };
 
     });
-    
+
     document.getElementById("list").innerHTML = content;
-    
+
 
   };
 
@@ -192,7 +192,7 @@ function filter(productArr) {
 
     });
     document.getElementById("list").innerHTML = content;
-    
+
 
   };
   if (type == "Miền Nam") {
@@ -241,7 +241,7 @@ function filter(productArr) {
 
     });
     document.getElementById("list").innerHTML = content;
-    
+
 
   };
   if (type == "Nhập khẩu") {
@@ -290,7 +290,7 @@ function filter(productArr) {
 
     });
     document.getElementById("list").innerHTML = content;
-    
+
 
   };
 
@@ -504,7 +504,7 @@ function tang(id) {
         data: productCart,
       })
         .then(function (res) {
-          
+
           renderListCart();
           offLoading();
         })
@@ -527,7 +527,7 @@ function giam(id) {
     method: "GET",
   })
     .then(function (res) {
-      
+
       let productCart = res.data;
       //sửa update thêm thành tiền
       productCart.quantity -= 1
@@ -572,32 +572,41 @@ function thanhToan() {
   axios({
     url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit`,
     method: "GET",
-    
+
   })
     .then(function (res) {
-      let arrListCart=res.data;
+      let arrListCart = res.data;
+      let stringTotalMoney = `<tr>
+                                <td colspan="5">TỔNG TIỀN</td>
+                                <td> 0đ</td>
+                                <td>
+                                <button onclick="thanhToan()" class="btn btn-success">Thanh Toán</button>
+                                <button class="btn btn-danger" onclick="hideModal()">Thoát</button>
+                                </td>
+                            </tr>`;
+      
       for (let i = 0; i < arrListCart.length; i++) {
         let id = arrListCart[i].id;
-        
+
         axios({
           url: `https://65a7ee3e94c2c5762da7f7ce.mockapi.io/fruit/${id}`,
           method: "DELETE",
         })
           .then(function (res) {
-            offLoading();
-            renderListCart();
             
+            document.getElementById("tableDanhSach").innerHTML=stringTotalMoney;
+            offLoading();
           })
           .catch(function (err) {
             offLoading();
             console.log(err);
           });
-        
-        
+
+
       }
-    
-      
-      
+      renderListCart();
+
+
     })
     .catch(function (err) {
       console.log(err);
