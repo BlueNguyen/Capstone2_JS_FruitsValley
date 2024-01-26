@@ -15,18 +15,15 @@ function renderListProduct(productArr) {
     let trString = `<tr>
                        <td>${index + 1}</td>
                        <td>${item.name}</td>
-                       <td><img style="width:80px" src="${
-                         item.img
-                       }" alt="lỗi Hình "/></td>
+                       <td><img style="width:80px" src="${item.img
+      }" alt="lỗi Hình "/></td>
                        <td>${item.price}</td>
                        <td>${item.type}</td>
                        <td>${item.desc}</td>
-                       <td> <button class="btn btn-danger mr-2 deleteBtn" onclick="deleteProduct(${
-                         item.id
-                       })"><i class="fa fa-trash"></i></button>
-                       <button class="btn btn-warning editBtn" onclick="editProduct(${
-                         item.id
-                       })"> <i class="fa fa-pen"></i></button></td>
+                       <td> <button class="btn btn-danger mr-2 deleteBtn" onclick="deleteProduct(${item.id
+      })"><i class="fa fa-trash"></i></button>
+                       <button class="btn btn-warning editBtn" onclick="editProduct(${item.id
+      })"> <i class="fa fa-pen"></i></button></td>
                     </tr>`;
 
     contentHTML += trString;
@@ -162,59 +159,7 @@ function updateProduct() {
     });
 }
 
-// function searchProducts() {
-//   const searchTerm = document.getElementById("inputSearch").value;
 
-//   fetch(
-//     `https://65a5f6bc74cf4207b4ef0f02.mockapi.io/product?search=${searchTerm}`
-//   )
-//     .then((response) => response.json())
-//     .then((data) => {
-//       const searchResults = document.getElementById("tblDanhSachSP");
-
-//       searchResults.innerHTML = ""; // Xóa tất cả các mục trước khi thêm kết quả mới
-
-//       data.forEach((productArr) => {
-//         let contentHTML = "";
-
-//         productArr.forEach((item, index) => {
-//           const tr = document.createElement("tr");
-//           tr.innerHTML = `
-//                         <td>${index + 1}</td>
-//                         <td>${item.name}</td>
-//                         <td><img style="width:80px" src="${
-//                           item.img
-//                         }" alt="lỗi Hình "/></td>
-//                         <td>${item.price}</td>
-//                         <td>${item.type}</td>
-//                         <td>${item.desc}</td>
-//                         <td>
-//                             <button class="btn btn-danger mr-2 deleteBtn" onclick="deleteProduct(${
-//                               item.id
-//                             })">
-//                                 <i class="fa fa-trash"></i>
-//                             </button>
-//                             <button class="btn btn-warning editBtn" onclick="editProduct(${
-//                               item.id
-//                             })">
-//                                 <i class="fa fa-pen"></i>
-//                             </button>
-//                         </td>
-//                     `;
-//           contentHTML += tr.outerHTML;
-//         });
-//         searchResults.innerHTML += contentHTML;
-//       });
-//     })
-//     .catch((error) => {
-//       console.error("Lỗi khi tải dữ liệu từ API:", error);
-//       alert("Đã xảy ra lỗi khi tải dữ liệu từ API. Vui lòng thử lại sau.");
-//     });
-// }
-
-// function findProduct(){
-
-// }
 
 function renderArea(rate) {
   axios({
@@ -257,3 +202,145 @@ function renderAreaAll() {
       console.log("err", err);
     });
 }
+
+
+// sắp xếp sản phẩm 
+function sort() {
+  let value = document.getElementById("sort").value;
+  if (value == "Hãy Chọn Loại Sắp Xếp") {
+    fetchListProduct();
+  }
+
+  if (value == "Giá Tăng") {
+    turnOnLoading();
+    axios({
+      url: `https://65a5f6bc74cf4207b4ef0f02.mockapi.io/product/`,
+      method: "GET",
+    })
+      .then(function (res) {
+
+        let arr = res.data;
+        //chuyển chữ thành số
+        for (let i = 0; i < arr.length; i++) {
+          let stringPrice = arr[i].price;
+          stringPrice = stringPrice.slice(0, stringPrice.length - 4);
+          let numberPrice = stringPrice * 1000;
+          arr[i].price = numberPrice;
+
+        }
+        // sắp xếp tăng
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr.length; j++) {
+            let tamObject = arr[i];
+            if (arr[j].price < arr[i].price) {
+              arr[i] = arr[j];
+              arr[j] = tamObject;
+            }
+          }
+
+        }
+        for (let i = 0; i < arr.length; i++) {
+          let numberPrice = arr[i].price / 1000;
+          let stringPrice = `${numberPrice}K/kg`
+          arr[i].price = stringPrice;
+
+        }
+
+        renderListProduct(arr);
+        turnOffloading();
+
+      })
+      .catch(function (err) {
+        turnOffloading();
+        console.log(err);
+      });
+
+  };
+
+
+  if (value == "Giá Giảm") {
+    turnOnLoading();
+    axios({
+      url: `https://65a5f6bc74cf4207b4ef0f02.mockapi.io/product/`,
+      method: "GET",
+    })
+      .then(function (res) {
+
+        let arr = res.data;
+        //chuyển chữ thành số
+        for (let i = 0; i < arr.length; i++) {
+          let stringPrice = arr[i].price;
+          stringPrice = stringPrice.slice(0, stringPrice.length - 4);
+          let numberPrice = stringPrice * 1000;
+          arr[i].price = numberPrice;
+
+        }
+        // sắp xếp giảm
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr.length; j++) {
+            let tamObject = arr[i];
+            if (arr[j].price > arr[i].price) {
+              arr[i] = arr[j];
+              arr[j] = tamObject;
+            }
+          }
+
+        }
+        for (let i = 0; i < arr.length; i++) {
+          let numberPrice = arr[i].price / 1000;
+          let stringPrice = `${numberPrice}K/kg`
+          arr[i].price = stringPrice;
+
+        }
+        renderListProduct(arr);
+        turnOffloading();
+      })
+      .catch(function (err) {
+        turnOffloading();
+        console.log(err);
+      });
+
+  }
+
+
+
+}
+
+// tìm sản phẩm theo tên
+function searchProducts() {
+  // console.log(1)
+
+  axios({
+    url: "https://65a5f6bc74cf4207b4ef0f02.mockapi.io/product/",
+    method: "GET",
+  })
+    .then(function (res) {
+      // console.log(2)
+      let searchName = document.getElementById("inputSearch").value;
+
+      let searchRate = [];
+      let arr = res.data;
+      for (let i = 0; i < arr.length; i++) {
+        if (searchName === arr[i].name) {
+          searchRate.push(arr[i])
+          renderListProduct(searchRate)
+          break
+        } else {
+
+          document.getElementById(
+            "tblDanhSachSP"
+          ).innerHTML = `<p class="text-center font-weight-bold">Không có loại trái cây này trong danh sách. Vui lòng tìm trái cây khác.</p>`;
+        }
+
+      }
+
+
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+
+
+}
+
+
