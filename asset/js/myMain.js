@@ -8,14 +8,7 @@ function offLoading() {
   document.querySelector(".loading").style.display = "none";
 
 }
-function onMessage() {
-  document.querySelector(".message_loading").style.display = "block";
 
-}
-function offMessage() {
-  document.querySelector(".message_loading").style.display = "none";
-
-}
 // ẩn hiện
 function showModal() {
   document.querySelector(".my_Modal").style.display = "block";
@@ -75,14 +68,16 @@ function renderListProduct(productArr) {
   document.getElementById("list").innerHTML = content;
 }
 function fetchListProduct() {
+  onLoading();
   axios({
     url: "https://65a5f6bc74cf4207b4ef0f02.mockapi.io/product",
     method: "GET",
   }).then(function (res) {
-
+    offLoading();
     renderListProduct(res.data);
   })
     .catch(function (err) {
+      offLoading();
       console.log(err);
     });
 
@@ -93,9 +88,11 @@ fetchListProduct();
 
 // filter 
 function filter(productArr) {
+  
   let type = document.getElementById("loai-trai-cay").value;
   if (type == "Tất Cả Sản Phẩm---Chọn Loại") {
     fetchListProduct();
+    
   };
 
   if (type == "Miền Bắc") {
@@ -143,7 +140,9 @@ function filter(productArr) {
       };
 
     });
+    
     document.getElementById("list").innerHTML = content;
+    
 
   };
 
@@ -193,6 +192,7 @@ function filter(productArr) {
 
     });
     document.getElementById("list").innerHTML = content;
+    
 
   };
   if (type == "Miền Nam") {
@@ -241,6 +241,7 @@ function filter(productArr) {
 
     });
     document.getElementById("list").innerHTML = content;
+    
 
   };
   if (type == "Nhập khẩu") {
@@ -289,20 +290,23 @@ function filter(productArr) {
 
     });
     document.getElementById("list").innerHTML = content;
+    
 
   };
 
 }
 function fetchListFilter() {
-
+  onLoading();
   axios({
     url: `https://65a5f6bc74cf4207b4ef0f02.mockapi.io/product`,
     method: "GET",
   })
     .then(function (res) {
       filter(res.data);
+      offLoading();
     })
     .catch(function (err) {
+      offLoading();
       console.log(err);
     });
 
@@ -500,8 +504,9 @@ function tang(id) {
         data: productCart,
       })
         .then(function (res) {
-          offLoading();
+          
           renderListCart();
+          offLoading();
         })
         .catch(function (err) {
           offLoading();
@@ -522,7 +527,7 @@ function giam(id) {
     method: "GET",
   })
     .then(function (res) {
-      offLoading();
+      
       let productCart = res.data;
       //sửa update thêm thành tiền
       productCart.quantity -= 1
@@ -531,6 +536,7 @@ function giam(id) {
 
         xoa(id);
         renderListCart()
+        offLoading();
         alert(`Bạn đã giảm hết số lượng của "${productCart.name}"`)
       } else {
         axios({
@@ -541,6 +547,7 @@ function giam(id) {
           .then(function (res) {
 
             renderListCart();
+            offLoading();
           })
           .catch(function (err) {
             console.log(err);
@@ -597,6 +604,7 @@ function thanhToan() {
     });
 
 }
+
 
 
 
